@@ -4,14 +4,14 @@ import 'package:flutter/material.dart';
 import 'package:flutter_inappwebview/flutter_inappwebview.dart';
 import 'package:flutterwebview/homepage.dart';
 
-class WebViewPage extends StatefulWidget {
-  const WebViewPage({super.key});
+class Dashboard extends StatefulWidget {
+  const Dashboard({super.key});
 
   @override
-  _WebViewPageState createState() => _WebViewPageState();
+  _DashboardState createState() => _DashboardState();
 }
 
-class _WebViewPageState extends State<WebViewPage> {
+class _DashboardState extends State<Dashboard> {
   InAppWebViewController? webViewController;
 
   @override
@@ -26,23 +26,10 @@ class _WebViewPageState extends State<WebViewPage> {
       body: SafeArea(
         child: SizedBox(
           child: InAppWebView(
-            initialUrlRequest: URLRequest(
-                url: WebUri('http://vety.cubeten.com/weblogin.aspx')),
+            initialUrlRequest:
+                URLRequest(url: WebUri('http://vety.cubeten.com/home.aspx')),
             onWebViewCreated: (controller) {
               webViewController = controller;
-            },
-            shouldOverrideUrlLoading: (controller, navigationAction) async {
-              var url = navigationAction.request.url.toString();
-              log("onclickbutton $url");
-              if (url == 'http://vety.cubeten.com/home.aspx') {
-                // Intercept the URL and navigate to a Flutter page instead
-                Navigator.push(
-                  context,
-                  MaterialPageRoute(builder: (context) => const FlutterPage()),
-                );
-                return NavigationActionPolicy.CANCEL;
-              }
-              return NavigationActionPolicy.ALLOW;
             },
             onLoadStart: (controller, url) {
               // print('Started loading: $url');

@@ -4,14 +4,14 @@ import 'package:flutter/material.dart';
 import 'package:flutter_inappwebview/flutter_inappwebview.dart';
 import 'package:flutterwebview/homepage.dart';
 
-class WebViewPage extends StatefulWidget {
-  const WebViewPage({super.key});
+class ContactusPage extends StatefulWidget {
+  const ContactusPage({super.key});
 
   @override
-  _WebViewPageState createState() => _WebViewPageState();
+  _ContactusPageState createState() => _ContactusPageState();
 }
 
-class _WebViewPageState extends State<WebViewPage> {
+class _ContactusPageState extends State<ContactusPage> {
   InAppWebViewController? webViewController;
 
   @override
@@ -22,27 +22,26 @@ class _WebViewPageState extends State<WebViewPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      appBar: AppBar(
+          leading: GestureDetector(
+              onTap: () {
+                if (webViewController != null) {}
+              },
+              child: const Icon(
+                Icons.arrow_back_ios_new,
+              ))),
       backgroundColor: const Color.fromARGB(255, 201, 200, 200),
       body: SafeArea(
         child: SizedBox(
           child: InAppWebView(
-            initialUrlRequest: URLRequest(
-                url: WebUri('http://vety.cubeten.com/weblogin.aspx')),
+            onCloseWindow: (controller) {
+              log('close');
+              Navigator.of(context).pop();
+            },
+            initialUrlRequest:
+                URLRequest(url: WebUri('http://vety.cubeten.com/Contact.aspx')),
             onWebViewCreated: (controller) {
               webViewController = controller;
-            },
-            shouldOverrideUrlLoading: (controller, navigationAction) async {
-              var url = navigationAction.request.url.toString();
-              log("onclickbutton $url");
-              if (url == 'http://vety.cubeten.com/home.aspx') {
-                // Intercept the URL and navigate to a Flutter page instead
-                Navigator.push(
-                  context,
-                  MaterialPageRoute(builder: (context) => const FlutterPage()),
-                );
-                return NavigationActionPolicy.CANCEL;
-              }
-              return NavigationActionPolicy.ALLOW;
             },
             onLoadStart: (controller, url) {
               // print('Started loading: $url');
@@ -66,6 +65,12 @@ class _WebViewPageState extends State<WebViewPage> {
                 print('Loading complete');
               }
             },
+            initialOptions: InAppWebViewGroupOptions(
+              crossPlatform: InAppWebViewOptions(
+                useShouldOverrideUrlLoading: true,
+                mediaPlaybackRequiresUserGesture: false,
+              ),
+            ),
           ),
         ),
       ),
