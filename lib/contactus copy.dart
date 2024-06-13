@@ -49,19 +49,22 @@ class _IlpPageState extends State<IlpPage> {
               },
               onLoadStop: (controller, url) async {
                 print('Finished loading: $url');
+                await controller.injectCSSCode(source: '''
+          body {
+    font-family: "Roboto,sans-serif;
+    font-size: 16px;
+    line-height: 1.42857143;
+    color: #333;
+    background-color: #fff;
+}
+          
+          ''');
                 // Inject JavaScript to remove the green footer and add padding at the end of the content
                 await controller.evaluateJavascript(source: """
                   document.getElementById('footer').style.display='none';
                   document.getElementsByClassName('navbar-wrapper')[0].style.display = 'none';
 
-                  var style = document.createElement('style');
-                  style.innerHTML = `
-                    body, * {
-                      font-family: 'Roboto',sans-serif;
-                      font-size: 16px; /* Adjust the font size as needed */
-                    }
-                  `;
-                  document.head.appendChild(style);
+ 
 
                   var paddingDiv = document.createElement('div');
                   paddingDiv.style.height = '50px'; // Adjust the height as needed
@@ -74,7 +77,7 @@ class _IlpPageState extends State<IlpPage> {
                   });
                 });
               },
-              onLoadError: (controller, url, code, message) {
+              onLoadError: (controllerr, url, code, message) async {
                 print('Error loading: $url, Error: $message');
                 setState(() {
                   isLoading = false; // Hide progress indicator
