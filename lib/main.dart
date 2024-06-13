@@ -14,7 +14,8 @@ class MyApp extends StatelessWidget {
       debugShowCheckedModeBanner: false,
       title: 'Flutter InAppWebView Demo',
       theme: ThemeData(
-        primarySwatch: Colors.blue,
+        fontFamily: 'KulimPark',
+        useMaterial3: false,
       ),
       home: const WebViewPage(),
     );

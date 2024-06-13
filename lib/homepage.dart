@@ -2,6 +2,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:flutter_inappwebview/flutter_inappwebview.dart';
+import 'package:flutterwebview/contactus%20copy.dart';
 import 'package:flutterwebview/contactus.dart';
 import 'package:flutterwebview/dashboard.dart';
 import 'package:flutterwebview/webpage.dart';
@@ -108,6 +109,25 @@ class FlutterPage extends StatelessWidget {
                     ),
                   )
                 ],
+              ),
+            ),
+            const SizedBox(
+              height: 30,
+            ),
+            GestureDetector(
+              onTap: () {
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(builder: (context) => const IlpPage()),
+                );
+              },
+              child: const Card(
+                elevation: 10,
+                child: SizedBox(
+                  width: 130,
+                  height: 100,
+                  child: Center(child: Text('ILP REGISTRATION')),
+                ),
               ),
             )
           ],
